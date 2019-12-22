@@ -121,8 +121,8 @@ function prepareFrame() {
         var url_string = window.location.href;
         var url = new URL(url_string);
         var ifrm = document.createElement("iframe");
-    targeturl = url.searchParams.get("site");
-    urlcolor = url.searchParams.get("color");
+    targeturl = url.searchParams.get("site") | "https://www.tamirp.com";
+    urlcolor = url.searchParams.get("color") | "0000FF";
         ifrm.setAttribute("src", targeturl );
         ifrm.style.width = "100%";
         ifrm.style.height = "100%";

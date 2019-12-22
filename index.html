@@ -112,6 +112,24 @@
 
   <script>
 
+
+
+window.onload = function(){
+                var bsDiv = document.getElementById("box-shadow-div");
+                var x, y;
+    // On mousemove use event.clientX and event.clientY to set the location of the div to the location of the cursor:
+                window.addEventListener('mousemove', function(event){
+                    x = event.clientX;
+                    y = event.clientY;                    
+                    if ( typeof x !== 'undefined' ){
+                        bsDiv.style.left = x + "px";
+                        bsDiv.style.top = y + "px";
+                    }
+                }, false);
+            }
+
+
+
 var targeturl;
 var urlcolor;
 function prepareFrame() {
@@ -121,8 +139,12 @@ function prepareFrame() {
         var url_string = window.location.href;
         var url = new URL(url_string);
         var ifrm = document.createElement("iframe");
-    targeturl = url.searchParams.get("site") | "https://www.tamirp.com";
-    urlcolor = url.searchParams.get("color") | "0000FF";
+    targeturl = url.searchParams.get("site");
+    urlcolor = url.searchParams.get("color");
+    if (targeturl == 0 | !targeturl) {targeturl = "https://www.tamirp.com";}
+    if (urlcolor == 0 | !urlcolor) {urlcolor = "0000FF";}
+    console.log(targeturl)
+    console.log(urlcolor)
         ifrm.setAttribute("src", targeturl );
         ifrm.style.width = "100%";
         ifrm.style.height = "100%";
@@ -391,20 +413,6 @@ $(function() {
 
 });
 });
-
-window.onload = function(){
-                var bsDiv = document.getElementById("box-shadow-div");
-                var x, y;
-    // On mousemove use event.clientX and event.clientY to set the location of the div to the location of the cursor:
-                window.addEventListener('mousemove', function(event){
-                    x = event.clientX;
-                    y = event.clientY;                    
-                    if ( typeof x !== 'undefined' ){
-                        bsDiv.style.left = x + "px";
-                        bsDiv.style.top = y + "px";
-                    }
-                }, false);
-            }
 
 
   </script>

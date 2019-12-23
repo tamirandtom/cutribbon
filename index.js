@@ -1,8 +1,11 @@
 'use strict';
 
+var targetUrl;
+var urlColor;
+
 window.onload = function () {
-    var bsDiv = document.getElementById("box-shadow-div");
-    var x, y;
+    let bsDiv = document.getElementById("box-shadow-div");
+    let x, y;
     // On mousemove use event.clientX and event.clientY to set the location of the div to the location of the cursor:
     window.addEventListener('mousemove', function (event) {
         x = event.clientX;
@@ -14,26 +17,21 @@ window.onload = function () {
     }, false);
 }
 
-var targeturl;
-var urlcolor;
-
 function prepareFrame() {
-    var url_string = window.location.href;
-    var url = new URL(url_string);
+    var urlString = window.location.href;
+    var url = new URL(urlString);
     var ifrm = document.createElement("iframe");
-    targeturl = url.searchParams.get("site");
-    urlcolor = url.searchParams.get("color");
-    if (targeturl == 0 | !targeturl) { targeturl = "http://www.bnop.co/"; }
-    if (urlcolor == 0 | !urlcolor) { urlcolor = "0000FF"; }
-    console.log(targeturl)
-    console.log(urlcolor)
-    ifrm.setAttribute("src", targeturl);
+    targetUrl = url.searchParams.get("site");
+    urlColor = url.searchParams.get("color");
+    if (targetUrl == 0 | !targetUrl) { targetUrl = "http://www.bnop.co/"; }
+    if (urlColor == 0 | !urlColor) { urlColor = "0000FF"; }
+    ifrm.setAttribute("src", targetUrl);
     ifrm.style.width = "100%";
     ifrm.style.height = "100%";
     document.body.appendChild(ifrm);
 
 
-    $(".ribbon1, .ribbon2").css("background", "#" + urlcolor);
+    $(".ribbon1, .ribbon2").css("background", "#" + urlColor);
 }
 
 prepareFrame();
@@ -42,7 +40,6 @@ prepareFrame();
 // UP UP DOWN ODWN LEFT RIGHT LEFT RIGHT A B
 // to trigger the confetti with a random color theme.
 // Otherwise the confetti constantly falls.
-var onlyOnKonami = false;
 
 $(function () {
     // Globals
@@ -57,11 +54,7 @@ $(function () {
         , confetti = [];
 
     // Settings
-    var konami = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]
-        , pointer = 0;
-
-    var particles = 150
-        , spread = 40
+    var spread = 40
         , sizeMin = 3
         , sizeMax = 12 - sizeMin
         , eccentricity = 10
@@ -99,10 +92,6 @@ $(function () {
 
     var colorThemes = ["#ff00ff"];
 
-
-    function color(r, g, b) {
-        return 'rgb(' + r + ',' + g + ',' + b + ')';
-    }
 
     // Cosine interpolation
     function interpolation(a, b, t) {
@@ -164,65 +153,56 @@ $(function () {
     container.style.zIndex = '9999';
 
     // Confetto constructor
-    function Confetto(theme) {
-        this.frame = 0;
-        this.outer = document.createElement('div');
-        this.inner = document.createElement('div');
-        this.outer.appendChild(this.inner);
-
-        var outerStyle = this.outer.style, innerStyle = this.inner.style;
-        outerStyle.position = 'absolute';
-        outerStyle.width = (sizeMin + sizeMax * random()) + 'px';
-        outerStyle.height = (sizeMin + sizeMax * random()) + 'px';
-        innerStyle.width = '100%';
-        innerStyle.height = '100%';
-        innerStyle.backgroundColor = '#' + urlcolor;
-
-
-        outerStyle.perspective = '50px';
-        outerStyle.transform = 'rotate(' + (360 * random()) + 'deg)';
-        this.axis = 'rotate3D(' +
-            cos(360 * random()) + ',' +
-            cos(360 * random()) + ',0,';
-        this.theta = 360 * random();
-        this.dTheta = dThetaMin + dThetaMax * random();
-        innerStyle.transform = this.axis + this.theta + 'deg)';
-
-        this.x = $window.width() * random();
-        this.y = -deviation;
-        this.dx = sin(dxThetaMin + dxThetaMax * random());
-        this.dy = dyMin + dyMax * random();
-        outerStyle.left = this.x + 'px';
-        outerStyle.top = this.y + 'px';
-
-        // Create the periodic spline
-        this.splineX = createPoisson();
-        this.splineY = [];
-        for (var i = 1, l = this.splineX.length - 1; i < l; ++i)
-            this.splineY[i] = deviation * random();
-        this.splineY[0] = this.splineY[l] = deviation * random();
-
-        this.update = function (height, delta) {
-            this.frame += delta;
-            this.x += this.dx * delta;
-            this.y += this.dy * delta;
-            this.theta += this.dTheta * delta;
-
-            // Compute spline and convert to polar
-            var phi = this.frame % 7777 / 7777, i = 0, j = 1;
-            while (phi >= this.splineX[j]) i = j++;
-            var rho = interpolation(
-                this.splineY[i],
-                this.splineY[j],
-                (phi - this.splineX[i]) / (this.splineX[j] - this.splineX[i])
-            );
-            phi *= PI2;
-
-            outerStyle.left = this.x + rho * cos(phi) + 'px';
-            outerStyle.top = this.y + rho * sin(phi) + 'px';
+    class Confetto {
+        constructor(theme) {
+            this.frame = 0;
+            this.outer = document.createElement('div');
+            this.inner = document.createElement('div');
+            this.outer.appendChild(this.inner);
+            var outerStyle = this.outer.style, innerStyle = this.inner.style;
+            outerStyle.position = 'absolute';
+            outerStyle.width = (sizeMin + sizeMax * random()) + 'px';
+            outerStyle.height = (sizeMin + sizeMax * random()) + 'px';
+            innerStyle.width = '100%';
+            innerStyle.height = '100%';
+            innerStyle.backgroundColor = '#' + urlColor;
+            outerStyle.perspective = '50px';
+            outerStyle.transform = 'rotate(' + (360 * random()) + 'deg)';
+            this.axis = 'rotate3D(' +
+                cos(360 * random()) + ',' +
+                cos(360 * random()) + ',0,';
+            this.theta = 360 * random();
+            this.dTheta = dThetaMin + dThetaMax * random();
             innerStyle.transform = this.axis + this.theta + 'deg)';
-            return this.y > height + deviation;
-        };
+            this.x = $window.width() * random();
+            this.y = -deviation;
+            this.dx = sin(dxThetaMin + dxThetaMax * random());
+            this.dy = dyMin + dyMax * random();
+            outerStyle.left = this.x + 'px';
+            outerStyle.top = this.y + 'px';
+            // Create the periodic spline
+            this.splineX = createPoisson();
+            this.splineY = [];
+            for (var i = 1, l = this.splineX.length - 1; i < l; ++i)
+                this.splineY[i] = deviation * random();
+            this.splineY[0] = this.splineY[l] = deviation * random();
+            this.update = function (height, delta) {
+                this.frame += delta;
+                this.x += this.dx * delta;
+                this.y += this.dy * delta;
+                this.theta += this.dTheta * delta;
+                // Compute spline and convert to polar
+                var phi = this.frame % 7777 / 7777, i = 0, j = 1;
+                while (phi >= this.splineX[j])
+                    i = j++;
+                var rho = interpolation(this.splineY[i], this.splineY[j], (phi - this.splineX[i]) / (this.splineX[j] - this.splineX[i]));
+                phi *= PI2;
+                outerStyle.left = this.x + rho * cos(phi) + 'px';
+                outerStyle.top = this.y + rho * sin(phi) + 'px';
+                innerStyle.transform = this.axis + this.theta + 'deg)';
+                return this.y > height + deviation;
+            };
+        }
     }
 
     function poof() {
@@ -231,11 +211,8 @@ $(function () {
             document.body.appendChild(container);
 
             // Add confetti
-            var theme = "rgb(0,0,0)"
-                , count = 0;
+            var theme = "rgb(0,0,0)";
             (function addConfetto() {
-                if (onlyOnKonami && ++count > particles)
-                    return timer = undefined;
 
                 var confetto = new Confetto(theme);
                 confetti.push(confetto);
@@ -276,9 +253,7 @@ $(function () {
         if (newState == -1) {
             newState = 0;
             setTimeout(function () {
-
-                location.href = targeturl;
-
+                location.href = targetUrl;
             }, 5000);
         }
     });

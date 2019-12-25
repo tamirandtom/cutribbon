@@ -56,7 +56,6 @@
       left: 0px;
       border: none;
       z-index: -1;
-  
     }
   
     .ribbon1 {
@@ -69,8 +68,6 @@
       z-index: 20;
       transition: all 1s ease-out;
       transition-delay: .4s;
-  
-  
     }
   
     .ribbon2 {
@@ -83,7 +80,6 @@
       z-index: 20;
       transition: all 1s ease-out;
       transition-delay: .4s;
-  
     }
 
     .ribbon1,
@@ -128,6 +124,40 @@
     .c2.open {
       transform: rotate(24deg);
     }
+
+    input[type=text] {
+      font-size: 20px;
+      border-radius: 4px;
+      border-style: solid;
+      width: 100%;
+      padding: 5px;
+      font-family: Roboto, sans-serif;
+    }
+
+    button {
+      flex-shrink: 0;
+    }
+
+    button,
+    input[type=color] {
+      font-size: 20px;
+      border-radius: 4px;
+      border-style: solid;
+      padding: 5px;
+      font-family: Roboto, sans-serif;
+      display: block;
+      background-color: floralwhite;
+      border: lightblue 1px solid;
+    }
+
+    input[type=color] {
+      height: 40.5px;
+      margin: 0 4px;
+    }
+
+    .controls-wrapper {
+      display: flex;
+    }
   </style>
   <meta charset='UTF-8'>
   <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
@@ -146,8 +176,16 @@
 
   <div id="form" class="form">
     <form action="./" method="get">
-      <input type="text" name="site" placeholder="https://…">
-      <input type="color" name="color" name="color">
+      <h1>
+        Ready to launch that new site?
+      </h1>
+      <div class="controls-wrapper">
+        <input type="text" name="site" placeholder="https://…">
+        <input type="color" name="color" name="color">
+        <button type="submit">
+          Cut that ribbon!
+        </button>
+      </div>
     </form>
   </div>
   <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>

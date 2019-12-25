@@ -147,7 +147,7 @@ $(function () {
             outerStyle.height = (sizeMin + sizeMax * random()) + 'px';
             innerStyle.width = '100%';
             innerStyle.height = '100%';
-            innerStyle.backgroundColor = '#' + urlColor;
+            innerStyle.backgroundColor = urlColor;
             outerStyle.perspective = '50px';
             outerStyle.transform = 'rotate(' + (360 * random()) + 'deg)';
             this.axis = 'rotate3D(' +

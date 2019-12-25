@@ -18,20 +18,29 @@ window.onload = function () {
 }
 
 function prepareFrame() {
-    var urlString = window.location.href;
-    var url = new URL(urlString);
-    var ifrm = document.createElement("iframe");
+    var url = new URL(window.location.href);
     targetUrl = url.searchParams.get("site");
-    urlColor = url.searchParams.get("color");
-    if (targetUrl == 0 | !targetUrl) { targetUrl = "http://www.bnop.co/"; }
-    if (urlColor == 0 | !urlColor) { urlColor = "0000FF"; }
-    ifrm.setAttribute("src", targetUrl);
-    ifrm.style.width = "100%";
-    ifrm.style.height = "100%";
-    document.body.appendChild(ifrm);
+    urlColor = url.searchParams.get("color") || "0000FF";
+    if ("#" !== urlColor[0]) {
+        urlColor = "#" + urlColor;
+    }
 
+    if (targetUrl) {
+        document.body.classList.toggle("mode-ribbon-cutting", true);
 
-    $(".ribbon1, .ribbon2").css("background", "#" + urlColor);
+        var ifrm = document.createElement("iframe");
+        ifrm.setAttribute("src", targetUrl);
+        ifrm.style.width = "100%";
+        ifrm.style.height = "100%";
+        document.body.appendChild(ifrm);
+
+        $(".ribbon1, .ribbon2").css("background", urlColor);
+
+    } else {
+        // Setup the intro form instead
+        document.body.classList.toggle("mode-form", true);
+    }
+
 }
 
 prepareFrame();
@@ -65,33 +74,6 @@ $(function () {
         , dyMax = .18
         , dThetaMin = .4
         , dThetaMax = .7 - dThetaMin;
-
-    //     var colorThemes = [
-    //     function() {
-    //       return color(200 * random()|0, 200 * random()|0, 200 * random()|0);
-    //     }, function() {
-    //       var black = 200 * random()|0; return color(200, black, black);
-    //     }, function() {
-    //       var black = 200 * random()|0; return color(black, 200, black);
-    //     }, function() {
-    //       var black = 200 * random()|0; return color(black, black, 200);
-    //     }, function() {
-    //       return color(200, 100, 200 * random()|0);
-    //     }, function() {
-    //       return color(200 * random()|0, 200, 200);
-    //     }, function() {
-    //       var black = 256 * random()|0; return color(black, black, black);
-    //     }, function() {
-    //       return colorThemes[random() < .5 ? 1 : 2]();
-    //     }, function() {
-    //       return colorThemes[random() < .5 ? 3 : 5]();
-    //     }, function() {
-    //       return colorThemes[random() < .5 ? 2 : 4]();
-    //     }
-    //   ];
-
-    var colorThemes = ["#ff00ff"];
-
 
     // Cosine interpolation
     function interpolation(a, b, t) {

@@ -12,7 +12,21 @@
     body {
       margin: 0;
       overflow: hidden;
+    }
+
+    body.mode-ribbon-cutting {
       cursor: none;
+    }
+
+    .form {
+      display: none;
+    }
+
+    body.mode-form {
+    }
+
+    body.mode-form .form {
+      display: initial;
     }
   
     .contain {
@@ -71,13 +85,28 @@
       transition-delay: .4s;
   
     }
+
+    .ribbon1,
+    .ribbon2 {
+      display: none;
+    }
+
+    .mode-ribbon-cutting .ribbon1,
+    .mode-ribbon-cutting .ribbon2 {
+      display: initial;
+    }
   
     .ribbon2.open,
     .ribbon1.open {
       width: 0px;
     }
+
+    .mode-ribbon-cutting #box-shadow-div {
+      display: initial;
+    }
   
     #box-shadow-div {
+      display: none;
       position: fixed;
       width: 600px;
       height: 600px;
@@ -106,18 +135,23 @@
 
 <body>
   <div class="ribbon" style="transform: scaleX(1.2) rotate(5deg);">
-      <div class="ribbon1"></div>
-      <div class="ribbon2"></div>
+    <div class="ribbon1"></div>
+    <div class="ribbon2"></div>
   </div>
   
-    <div id="box-shadow-div">
-<div class="c1"><img src="c1.png" width="600" height="600"></div>
-<div class="c2"><img src="c2.png" width="600" height="600"></div>
-    </div>
-  <script src="https://code.jquery.com/jquery-2.2.4.min.js"
-    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  <div id="box-shadow-div">
+    <div class="c1"><img src="c1.png" width="600" height="600"></div>
+    <div class="c2"><img src="c2.png" width="600" height="600"></div>
+  </div>
 
-    <script src="./index.js"></script>
+  <div id="form" class="form">
+    <form action="./" method="get">
+      <input type="text" name="site" placeholder="https://…">
+      <input type="color" name="color" name="color">
+    </form>
+  </div>
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  <script src="./index.js"></script>
 </body>
 
 </html>

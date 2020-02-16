@@ -26,14 +26,24 @@ function prepareFrame() {
     }
 
     if (targetUrl) {
+
+         
+
+        if (targetUrl.includes('tamuseum'))
+        {
+            document.body.classList.toggle("is-tam", true);
+
+        } else {
+            var ifrm = document.createElement("iframe");
+            ifrm.setAttribute("src", targetUrl);
+            ifrm.style.width = "100%";
+            ifrm.style.height = "100%";
+            document.body.appendChild(ifrm);
+    
+        }
         document.body.classList.toggle("mode-ribbon-cutting", true);
 
-        var ifrm = document.createElement("iframe");
-        ifrm.setAttribute("src", targetUrl);
-        ifrm.style.width = "100%";
-        ifrm.style.height = "100%";
-        document.body.appendChild(ifrm);
-
+      
         $(".ribbon1, .ribbon2").css("background", urlColor);
 
     } else {
